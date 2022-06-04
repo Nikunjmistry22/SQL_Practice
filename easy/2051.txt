@@ -1,0 +1,2 @@
+select account_id,user_id from sf_events
+where date like '%01%';

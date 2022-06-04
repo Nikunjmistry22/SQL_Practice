@@ -1,0 +1,3 @@
+select rcu.user_id from rc_calls rcc join rc_users rcu
+on rcc.user_id=rcu.user_id
+where status = 'free';

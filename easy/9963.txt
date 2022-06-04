@@ -1,0 +1,3 @@
+select qb,game_points from qbstats_2015_2016
+order by game_points desc
+limit 10;
