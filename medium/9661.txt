@@ -1,0 +1,3 @@
+select student_id,hrs_studied,sat_math from sat_scores
+group by sat_math 
+having sat_math = (select max(sat_math) from sat_scores)

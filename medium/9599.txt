@@ -1,0 +1,2 @@
+select t1.games,count(t1.age) as Count_old_athelete,count(t2.age) as Count_young_athelete from olympics_athletes_events t1,olympics_athletes_events t2
+where t1.age>50 and t2.age<=25;

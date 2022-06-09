@@ -1,0 +1,2 @@
+select t1.id,t2.label,t1.day from google_gmail_emails t1 join google_gmail_labels t2 
+on t1.id=t2.email_id;

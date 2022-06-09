@@ -1,0 +1,5 @@
+select sector, marketvalue from forbes_global_2010_2014
+group by sector
+having marketvalue= (select max(marketvalue)) 
+order by marketvalue desc limit 1
+
