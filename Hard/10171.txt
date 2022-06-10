@@ -1,0 +1,4 @@
+select n.top_genre ,count(o.winner) from oscar_nominees o join nominee_information n
+where o.id=n.id
+group by n.top_genre
+limit 1
