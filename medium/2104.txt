@@ -1,0 +1,4 @@
+select concat(user_firstname," ",user_lastname) as full_name 
+from user_flags 
+group by video_id
+order by video_id desc limit 1

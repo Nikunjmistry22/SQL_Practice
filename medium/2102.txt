@@ -1,0 +1,3 @@
+select count(flag_id) from user_flags where flag_id = (select flag_id group by user_firstname
+having flag_id is not NULL
+and user_firstname is not NULL);

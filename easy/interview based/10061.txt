@@ -1,0 +1,4 @@
+select e.location,avg(h.popularity) as average from facebook_employees e join facebook_hack_survey
+h on e.id=h.employee_id
+group by e.location
+order by average desc

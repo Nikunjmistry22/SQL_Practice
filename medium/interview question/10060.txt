@@ -1,0 +1,3 @@
+select business_name,review_text,max(cool) from yelp_reviews
+group by review_text,business_name
+order by max(cool) desc limit 1
