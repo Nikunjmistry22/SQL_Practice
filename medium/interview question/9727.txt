@@ -1,0 +1,4 @@
+select business_name,count(*) as no_of_violation from sf_restaurant_health_violations
+where risk_category is not null 
+group by business_name
+order by no_of_violation desc
