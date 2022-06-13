@@ -1,0 +1,3 @@
+select c.id,c.first_name,min(o.total_order_cost) as lowest_price 
+from customers c join orders o on c.id=o.cust_id
+ group by c.first_name

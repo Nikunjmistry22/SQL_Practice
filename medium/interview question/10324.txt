@@ -1,0 +1,3 @@
+select r.id,u.name,sum(r.distance) from lyft_rides_log r join lyft_users u 
+on r.user_id=u.id
+group by name order  by sum(r.distance) desc limit 10

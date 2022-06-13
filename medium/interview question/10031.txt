@@ -1,0 +1,2 @@
+select country,region_1,count(winery) from winemag_p1
+ where (description like '%blackberry%') and (winery like '%bodega%')

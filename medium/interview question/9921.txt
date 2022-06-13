@@ -1,0 +1,11 @@
+select department,count(case when 
+sex='F' then 1
+end) as count_female,count(case when 
+sex='M' then 1
+end) as count_male,sum(case when
+sex='F' then salary end) 
+as total_female_salary ,
+sum(case when
+sex='M' then salary end) 
+as total_male_salary 
+from employee group by department
