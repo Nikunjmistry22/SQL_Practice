@@ -1,0 +1,5 @@
+select f.name,i.birthday, avg(f.rating) as AVG_RATING from nominee_filmography f join nominee_information i
+on f.name=i.name
+group by name
+having(AVG_RATING is not null)
+order by birthday

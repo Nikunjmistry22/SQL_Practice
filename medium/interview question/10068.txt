@@ -1,0 +1,5 @@
+select to_user,count(case when label = 'Promotion' then 1 end
+) as no_of_promotion, count(case when label = 'Social' then 1 end
+) as no_of_social,count(case when label = 'Shopping' then 1 end
+)  as no_of_shopping from google_gmail_emails
+ join google_gmail_labels group by to_user

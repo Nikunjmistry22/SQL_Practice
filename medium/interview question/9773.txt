@@ -1,0 +1,4 @@
+select reaction, count(reaction) from facebook_reactions
+where date_day = 1
+group by reaction
+order by count(reaction) desc

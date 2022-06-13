@@ -1,0 +1,4 @@
+select f.name,avg(f.rating) as AVG_RATING,abs((select rating from nominee_filmography where id =(select max(id) from nominee_filmography where id = (select max(id) from nominee_filmography where id not in (select max(id) from nominee_filmography)))) -avg(f.rating)) as absolute_difference from nominee_filmography f join nominee_information i
+on f.name=i.name
+group by f.name
+having(avg(f.rating) is not null)
