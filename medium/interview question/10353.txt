@@ -4,3 +4,14 @@ FROM worker
 JOIN title 
 ON worker_id = worker_ref_id
 WHERE salary=(SELECT MAX(salary) FROM worker)
+
+Above solution would not be considered it wont return the max salary 
+having multiple same jobtitle
+--------------------------------------------------
+using window function to overcome the problem
+---------------------------------------------------
+SELECT
+    worker_title AS best_paid_title ,max(salary) over(partition by worker_title order by salary desc)
+FROM worker
+JOIN title 
+ON worker_id = worker_ref_id
