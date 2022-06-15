@@ -1,0 +1,3 @@
+select from_type,round(avg(review_score),2) from airbnb_reviews
+group by from_type 
+order by round(avg(review_score),2) desc limit 1
