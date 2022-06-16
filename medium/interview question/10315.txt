@@ -1,0 +1,4 @@
+select city
+from zillow_transactions
+group by city
+having avg(mkt_price)>(select avg(mkt_price) from zillow_transactions)

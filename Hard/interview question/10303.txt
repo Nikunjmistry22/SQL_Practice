@@ -1,0 +1,5 @@
+select policy_num,state,claim_cost,fraud_score from 
+
+(select *,percent_rank() over (partition by state order by fraud_score) as r
+from fraud_score) ranks
+where r<=0.05

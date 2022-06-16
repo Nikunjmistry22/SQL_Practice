@@ -1,0 +1,11 @@
+select date,total_energy from(
+select date,sum(consumption) as total_energy,
+rank() over(order by sum(consumption) desc) as r
+from
+(select * from fb_eu_energy
+union all
+select * from fb_asia_energy
+union all
+select * from fb_na_energy) consumption
+group by date) ranking
+where r=1
