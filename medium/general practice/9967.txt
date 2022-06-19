@@ -1,0 +1,4 @@
+select qb,sum(td) from qbstats_2015_2016
+where year=2016
+group by qb
+order by sum(td) desc

@@ -1,0 +1,9 @@
+--Using aggregate function
+--select jobtitle,sum(overtimepay)  from sf_public_salaries
+--group by jobtitle
+--order by sum(overtimepay) desc limit 3
+--using window function
+select jobtitle from (
+select jobtitle,dense_rank() over(order by overtimepay  desc) as r
+from sf_public_salaries) as x
+where x.r<4
