@@ -1,0 +1,5 @@
+select count(bed_type),neighbourhood from airbnb_search_details 
+where neighbourhood is not null
+group by neighbourhood
+having count(bed_type)>=3
+order by count(bed_type) desc
