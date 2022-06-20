@@ -1,0 +1,5 @@
+select count(*) from (
+select distinct rc_calls.user_id,count(call_id) from rc_calls join rc_users
+on rc_calls.user_id=rc_users.user_id
+where rc_users.status='paid' and year(rc_calls.date)=2020
+group by rc_calls.user_id) as x

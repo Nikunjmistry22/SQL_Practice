@@ -1,0 +1,3 @@
+select player_id,login_date from (
+select *,rank() over(partition by player_id order by login_date desc) as LatestRank from players_logins ) as x
+where x.LatestRank=1;
