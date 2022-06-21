@@ -1,0 +1,5 @@
+select team_id,AVERAGE from (
+select team_id,avg(member_score) as AVERAGE,rank() over(order by avg(member_score) desc) as r from  google_competition_participants p join google_competition_scores s on p.member_id=s.member_id
+group by team_id) as x
+where x.r=1
+

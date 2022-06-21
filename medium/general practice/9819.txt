@@ -1,0 +1,4 @@
+-- select m1,m2,sum(number) from (
+-- select *,max(number) as m1,min(number) as m2 from transportation_numbers) as x
+-- where x.number not in (m1,m2)
+select max(number) as Maximum ,min(number) as Minimum ,sum(number)-max(number)-min(number) from transportation_numbers

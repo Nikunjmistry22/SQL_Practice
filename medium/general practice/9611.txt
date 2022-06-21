@@ -1,0 +1,3 @@
+select hrs_studied from (
+select *,(percent_rank() over(order by hrs_studied)*100) as percentile  from sat_scores ) as x
+where x.percentile between 80 and 81

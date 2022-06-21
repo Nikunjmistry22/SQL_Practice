@@ -1,0 +1,4 @@
+select p1.user_id,p2.language,p1.location from playbook_experiments p1 join playbook_users p2
+on p1.user_id=p2.user_id
+where p1.device like 'nexus 5' and language not in ('german')
+order by p1.occurred_at
