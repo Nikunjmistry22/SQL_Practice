@@ -1,0 +1,3 @@
+select u.company_id,u.language,count(event_name) from playbook_events e join playbook_users u on e.user_id=u.user_id
+where e.location like 'Argentina' and u.language not like 'Spanish'
+group by u.company_id

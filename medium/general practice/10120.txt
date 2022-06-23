@@ -1,0 +1,2 @@
+select e.to_user,e.id,l.label,count(l.label) from google_gmail_emails e join  google_gmail_labels l on e.id=l.email_id 
+group by to_user

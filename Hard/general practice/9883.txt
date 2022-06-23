@@ -1,0 +1,3 @@
+select name,age,pclass from 
+(select name,age,pclass,dense_rank() over(partition by pclass order by age desc) as r from titanic) as x
+where x.r=1
