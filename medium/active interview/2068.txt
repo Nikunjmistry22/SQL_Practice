@@ -1,0 +1,2 @@
+select p.product_id,p.brand_name from facebook_products p join facebook_sales s on p.product_id=s.product_id group by p.product_id 
+having avg(s.cost_in_dollars)>=3 and count(customer_id) >=2

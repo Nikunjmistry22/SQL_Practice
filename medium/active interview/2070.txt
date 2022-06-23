@@ -1,0 +1,5 @@
+select product_class from
+(select p.product_class,count(s.customer_id),dense_rank() over(order by count(s.customer_id) desc) as r from facebook_products p join facebook_sales s on p.product_id=s.product_id 
+group by product_class
+) as x
+where x.r<4

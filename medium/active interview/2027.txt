@@ -1,0 +1,4 @@
+select customer_id from fact_events
+where client_id like 'desktop'
+group by(customer_id)
+order by count(user_id) desc limit 1

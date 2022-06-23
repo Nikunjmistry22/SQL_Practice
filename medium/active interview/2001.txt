@@ -1,0 +1,5 @@
+with sample (sumValue) as
+    (SELECT sum(balance) FROM submissions)
+    
+select rate_type,id as loan_id,balance,balance/sumValue*100
+from submissions,sample;
