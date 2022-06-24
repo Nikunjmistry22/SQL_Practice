@@ -1,0 +1,6 @@
+select video_id,most_flag from (
+select *, dense_rank() over(order by most_flag desc) as r from (
+select f.video_id,count(r.flag_id) as most_flag from user_flags f join flag_review r on f.flag_id=r.flag_id 
+where r.reviewed_by_yt=1 group by video_id order by count(r.flag_id) desc
+) as x) as y
+where y.r=1

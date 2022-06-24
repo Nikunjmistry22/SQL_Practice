@@ -1,0 +1,2 @@
+with cte(Average) as (select count(*) from google_friends_network)
+select user_id,count(friend_id)/Average as avgerage   from google_friends_network,cte group by user_id order by average desc

@@ -1,0 +1,24 @@
+first approach
+select origin,destination,min(cost) from (
+select origin,destination,cost from da_flights 
+union
+select origin,Dest,COST from (
+select *,dense_rank() over(partition by b.origin,b.Dest order by b.COST) as r  from (
+select distinct a.origin,(case when dest2 is null then dest1 else dest2 end) as Dest ,(case when cost2 is null then cost1 else cost1+cost2 end) as COST from (
+select t1.origin,t1.destination dest1,t2.destination dest2,t1.cost cost1,t2.cost cost2 
+from da_flights t1 left join da_flights t2 on (t1.destination=t2.origin and t1.origin <> t2.destination)) as a) as b) as c
+where c.r=1) d 
+group by origin,destination
+order by origin,destination
+
+
+Second approach
+select * from 
+(select distinct start,dest,cost from pet 
+union 
+select distinct b.start,b.dest,MIN(total) cost 
+from 
+(select distinct a.start,(case when a.dest2 is null then dest1 else dest2 end)dest,(case when a.cost2 is NULL then a.cost1 else a.cost2+a.cost1 end) total 
+from (select t1.start,t1.dest dest1,t2.dest dest2,t1.cost cost1,t2.cost cost2 
+from pet t1 left join pet t2 on (t1.dest=t2.start and t1.start <> t2.dest))a)b group by b.start,b.dest order by cost)c 
+group by start,dest;
