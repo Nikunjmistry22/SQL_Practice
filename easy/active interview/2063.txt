@@ -1,0 +1,4 @@
+select source_currency,target_currency,Jan-July from (
+select source_currency,target_currency,(case when date like '2020-07-01' then exchange_rate else 0 end)as July,
+(case when date like '2020-01-01' then exchange_rate else 0 end) as Jan
+from sf_exchange_rate) as a
