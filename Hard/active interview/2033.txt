@@ -1,0 +1,4 @@
+select *,avg_amt/avg_dur*100 as ratio from (
+select location,avg(datediff(signup_stop_date,signup_start_date)) as avg_dur,avg(amt) as avg_amt from signups s join transactions t on s.signup_id=t.signup_id
+group by location) as x
+order by ratio desc

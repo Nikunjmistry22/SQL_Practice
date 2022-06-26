@@ -1,0 +1,8 @@
+select m,count(restaurant_id) as t from ( 
+select restaurant_id,month(d.actual_delivery_time) as m,sum(o.sales_amount) as total from delivery_orders d
+join order_value o on d.delivery_id=o.delivery_id
+where year(actual_delivery_time)=2021
+group by restaurant_id,m
+having total>100) as x group by m
+
+*********incomplte*********************

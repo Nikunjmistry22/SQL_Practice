@@ -1,0 +1,5 @@
+select *,dense_rank() over(order by difference) from (
+select first_name,datediff(termination_date,hire_date) as difference from uber_employees
+where termination_date is not null) as x
+
+*****further just include min,max************
