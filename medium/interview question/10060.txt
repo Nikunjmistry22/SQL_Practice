@@ -1,3 +1,6 @@
-select business_name,review_text,max(cool) from yelp_reviews
-group by review_text,business_name
-order by max(cool) desc limit 1
+select business_name,review_text,total from(
+select business_name,review_text,sum(cool) as total,dense_rank() over(order by sum(cool
+) desc) as r from yelp_reviews
+group by business_name
+order by total desc) as x
+where x.r=1

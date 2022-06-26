@@ -1,0 +1,5 @@
+select purpose,total from (
+select purpose,sum(miles) as total,dense_rank() over(order by sum(miles) desc) as r from my_uber_drives 
+where purpose is not null
+group by purpose) as x
+where x.r<4

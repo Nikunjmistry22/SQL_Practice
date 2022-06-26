@@ -1,0 +1,4 @@
+select company_name,abs(total_product_2020-total_product_2019) as netdifference from (
+select company_name,count(case when year=2019 then product_name end) as total_product_2019,count(case when year=2020 then product_name end) as total_product_2020 from car_launches
+group by company_name
+) as a

@@ -1,0 +1,2 @@
+select max(total)-min(total) as HighestTotal from (
+select *,assignment1+assignment2+assignment3 as total from box_scores) as a
