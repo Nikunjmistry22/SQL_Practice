@@ -1,0 +1,11 @@
+**********using mysql*****************
+select (count(restaurant_id)*sum(avg_order*avg_time)-(sum(avg_order)*sum(avg_time)))/
+(sqrt((count(restaurant_id)*sum(avg_order*avg_order))-((sum(avg_order)*sum(avg_order))))*(count(restaurant_id)*sum(avg_time*avg_time))-((sum(avg_time)*sum(avg_time))))
+from (
+select restaurant_id,avg(order_total) as avg_order, avg(datediff(delivered_to_consumer_datetime,customer_placed_order_datetime))*24*60 as avg_time from doordash_delivery
+group by restaurant_id) x
+
+*********using postgress sql***************
+select corr(avg_order,avg_time) from (
+select restaurant_id,avg(order_total) as avg_order, avg(datediff(delivered_to_consumer_datetime,customer_placed_order_datetime))*24*60 as avg_time from doordash_delivery
+group by restaurant_id) x

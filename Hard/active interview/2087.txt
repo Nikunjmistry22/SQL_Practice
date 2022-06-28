@@ -1,0 +1,5 @@
+select name,negative_review/(total-negative_review) as ratio from (
+select name,store_id,sum(case when score <5 then 1 else 0 end) as negative_review,count(store_id)as total
+from  instacart_reviews r join instacart_stores s on r.id=s.id
+where month(opening_date)>6
+group by store_id) as x
