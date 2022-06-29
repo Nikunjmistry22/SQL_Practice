@@ -1,0 +1,4 @@
+select distinct(salary),department from (
+select *,dense_rank() over(partition by department order by salary) as r from twitter_employee) as x
+where x.r=1
+order by department,salary desc

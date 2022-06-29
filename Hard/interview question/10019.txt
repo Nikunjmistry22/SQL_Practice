@@ -1,0 +1,4 @@
+with cte(total) as (select count(*) from lyft_rides)
+select weather,hour,count(*)/total*100 from lyft_rides,cte
+group by weather,hour
+order by weather,hour

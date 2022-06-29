@@ -1,0 +1,3 @@
+select *,male/female as ratio from (
+select games,sum(case when sex like 'M' then 1 end)as male,sum(case when sex like 'F' then 1 end)as female from olympics_athletes_events
+group by games) as x

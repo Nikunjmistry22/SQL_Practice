@@ -1,0 +1,5 @@
+select SUBSTRING_INDEX(SUBSTRING_INDEX(name, ' ', 1), ' ', -1) AS first_name,(case when medal is null then 'No medal' else null end) as no_medal,
+(case when medal like 'Gold' then medal else null end) as Gold,
+(case when medal like 'Silver' then medal else null end) as Silver,
+(case when medal like 'Bronze' then medal else null end) as Bronze
+from olympics_athletes_events;

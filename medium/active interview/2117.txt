@@ -1,0 +1,4 @@
+select last_name from (
+select last_name,count(order_id),dense_rank() over(order by count(order_id) desc) as r from shopify_orders o join shopify_employees e on o.resp_employee_id=e.id
+group by resp_employee_id,last_name) as x
+where x.r=1

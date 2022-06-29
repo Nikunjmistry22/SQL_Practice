@@ -1,0 +1,2 @@
+select distinct(name) from olympics_athletes_events
+where year like '1992' and year not like '1994';

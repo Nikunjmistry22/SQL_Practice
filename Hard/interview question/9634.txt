@@ -1,0 +1,5 @@
+select zipcode,concat(int_text,' %') as precent from (
+select zipcode,avg(SUBSTR(host_response_rate, 1, instr(host_response_rate, '%')-1)) as int_text from airbnb_search_details
+where cleaning_fee = 1
+group by zipcode
+order by int_text) as x
