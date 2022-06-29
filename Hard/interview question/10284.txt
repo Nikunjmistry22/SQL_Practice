@@ -1,0 +1,13 @@
+with cte(total) as(select count(distinct user1) from (select user1 from facebook_friends
+union 
+select user2 from facebook_friends)as a
+)
+
+select user1,sum(c)/total*100 from cte,(
+select user1,count(user2) as c from facebook_friends
+group by user1
+union
+(select user2,count(user1) from facebook_friends
+group by user2)) as y
+group by user1
+order by user1 
