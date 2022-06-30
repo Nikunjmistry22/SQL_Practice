@@ -1,0 +1,6 @@
+with cte(total) as (select count(delivery_id) from delivery_orders)
+select substr(order_placed_time,1,7)as format,count(delivery_id)/total*100 as percent from cte,(
+select *,timediff(actual_delivery_time,predicted_delivery_time)/60 as time_diff from delivery_orders)x
+where x.time_diff>20
+group by month(order_placed_time)
+order by percent desc

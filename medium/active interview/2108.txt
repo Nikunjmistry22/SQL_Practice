@@ -1,0 +1,4 @@
+select empl_id,max_no_cust from(
+select empl_id,count(cust_id) as max_no_cust,dense_rank() over(order by count(cust_id) desc) as r from map_employee_territory r join map_customer_territory t on r.territory_id=t.territory_id
+group by t.territory_id,empl_id)x
+where x.r=1

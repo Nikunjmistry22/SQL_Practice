@@ -1,0 +1,8 @@
+select null_firstname,null_lastname,null_videoid,null_flagid from (
+select null_firstname,null_lastname,null_videoid,null_flagid,null_firstname+null_lastname+null_videoid+null_flagid as total from (
+select (case when user_firstname is null then 1 else 0  end) as null_firstname,
+(case when user_lastname is null then 1 else 0  end) as null_lastname,
+(case when video_id is null then 1 else 0  end) as null_videoid,
+(case when flag_id is null then 1 else 0  end) as null_flagid
+from user_flags) x
+where x.null_firstname=1 or x.null_lastname=1 or x.null_videoid=1 or x.null_flagid=1) y where y.total>1

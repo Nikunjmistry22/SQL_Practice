@@ -1,0 +1,3 @@
+select concat(year(request_date),'-',month(request_date)) as YYYY_MM,round(abs(total-m),2) from (
+select request_date,distance_to_travel*monetary_cost as total,avg(distance_to_travel/monetary_cost) over(partition by month(request_date) ) as m 
+from uber_request_logs group by request_date order by request_date) as x
