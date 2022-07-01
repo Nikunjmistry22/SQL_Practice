@@ -1,0 +1,3 @@
+select count(*) from (
+select message_sender_id,message_receiver_id,count(message_id) from whatsapp_messages
+group by message_sender_id,message_receiver_id)x

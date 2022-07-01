@@ -1,0 +1,2 @@
+select *,(case when n1>n2 then n1 else n2 end) as max_num from (
+SELECT d1.number as n1,d2.number as n2 FROM deloitte_numbers d1 join deloitte_numbers d2)x

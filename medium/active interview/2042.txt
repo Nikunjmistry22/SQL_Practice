@@ -1,0 +1,4 @@
+select first_name,last_name,(case when termination_date is null then 'No' else 'Yes' end)as Still_in_working,diff_date from (
+SELECT *,datediff('2021-05-01',hire_date) as diff_date FROM uber_employees
+group by id
+having diff_date>730)x

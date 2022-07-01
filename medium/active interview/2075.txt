@@ -1,0 +1,28 @@
+WITH completion_rate AS (
+    SELECT student_id,
+           AVG(completion) * 100 AS completion_rate
+    FROM (
+        SELECT student_id,
+               CASE
+                    WHEN grade IS NULL THEN 0
+                    ELSE 1
+                END AS completion
+        FROM allstate_homework
+    ) AS completion_check
+    GROUP BY 1
+),
+
+average_grade AS (
+    SELECT student_id,AVG(grade) AS avg_grade
+    FROM allstate_homework
+    GROUP BY 1
+)
+
+SELECT s.student_firstname,
+       ag.avg_grade,
+       cr.completion_rate
+FROM allstate_students s
+JOIN average_grade ag
+    ON s.student_id = ag.student_id
+JOIN completion_rate cr
+    ON s.student_id = cr.student_id

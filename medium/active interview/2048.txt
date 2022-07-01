@@ -1,0 +1,5 @@
+with cte(total_order,total_revenue) as (select sum(number_of_orders),sum(monetary_value) from uber_orders)
+select service_name,sum(number_of_orders)/total_order*100 as percent_incomplete_order,sum(monetary_value)/total_revenue*100 as percent_revenue_loss from cte,uber_orders
+where status_of_order like 'Cancelled'
+group by service_name
+having sum(monetary_value) is not null

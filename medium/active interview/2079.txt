@@ -1,0 +1,5 @@
+select city from (
+select city,count(driver_id),dense_rank() over(order by count(driver_id) desc) as r from  lyft_orders o join lyft_payments p where o.order_id=p.order_id
+and promo_code is FALSE and month(order_date)=8 and year(order_date)=2021
+group by city) x
+where x.r=1

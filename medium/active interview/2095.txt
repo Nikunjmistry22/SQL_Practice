@@ -1,0 +1,5 @@
+select user_id 
+from amazon_orders
+where year(order_date) in ('2020','2021')
+group by user_id
+having count(id)>=3
