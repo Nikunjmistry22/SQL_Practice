@@ -1,0 +1,13 @@
+select first_name,s from(
+select * from employee e join (
+select id as i,salary as s from employee
+where employee_title like 'Manager') as x on e.manager_id=x.i) as y
+where y.salary>y.s
+
+********************************************
+
+with cte (id,fn,s1,m_id) as (select id,first_name,salary,manager_id from employee),
+cte1 (mid1,s2) as (select id,salary from employee where employee_title like 'manager')
+
+select fn as firstname,s1 as s_employee from cte join cte1 on m_id=mid1
+where s1>s2

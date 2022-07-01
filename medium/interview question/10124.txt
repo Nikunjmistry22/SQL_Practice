@@ -1,0 +1,2 @@
+select id_user,(case when ts_booking_at is null then 'does not book' else 'books' end) as actions,avg(n_searches) as average_searches from airbnb_contacts c join airbnb_searches s on c.ds_checkin=s.ds_checkin
+group by id_user,actions
