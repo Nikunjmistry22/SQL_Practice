@@ -1,0 +1,6 @@
+select person_name from (
+select person_name,dense_rank() over(order by cumm_sum desc) as r 
+from (
+select *,sum(weight) over(order by turn) as cumm_sum from Queue
+having cumm_sum<=1000) x) y
+where y.r=1

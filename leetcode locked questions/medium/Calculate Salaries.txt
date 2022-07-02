@@ -1,0 +1,14 @@
+with cte as (
+select company_id, (case when max_salary <1000 then 0
+when max_salary between 1000 and 10000 then 24
+when max_salary >10000 then 49 end) as tax_classfication
+select company_id,salary as max_salary from (
+select company_id,salary ,
+rank() over(partition by company_id order by salary desc) as r 
+from Salaries) x where x.r=1)
+
+
+
+select s.company_id,s.employee_id,s.employee_name,
+s.salary-(tax_classification/100*s.salary) as Salary from Salaries s join cte
+on s.company_id=cte.company_id
