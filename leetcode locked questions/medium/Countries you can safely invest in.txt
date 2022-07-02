@@ -1,0 +1,14 @@
+with global(average) as (select avg(duration) from Calls),
+
+country_people as (select p.id as id,p.name,p.phone_number,cast(substring(phone_number,1,3) 
+as int) as code,c.name as country_name,c.country_code 
+from Person p join Country c on p.code=c.country_code),
+
+people_average as (select caller_id,avg(caller_id) from
+(select caller_id,duration from Calls
+union 
+select calle_id,abg(duration) from calls)x)
+group by x.caller_id)
+
+select country_name from global,country_people c,people_average p on c.caller_id=p.id
+where p.abg(caller_id_>average

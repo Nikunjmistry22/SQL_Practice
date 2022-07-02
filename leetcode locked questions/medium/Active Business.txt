@@ -1,0 +1,2 @@
+with cte(average) as (select avg(occurences) from Events)
+select business_id from Events,cte where occurences>average
