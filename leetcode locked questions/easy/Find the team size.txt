@@ -1,0 +1,3 @@
+with cte as (select team_id as t_id,count(employee_id) as total from employee
+group by team_id)
+select employee_id,total from Employee join cte on team_id=t_id 

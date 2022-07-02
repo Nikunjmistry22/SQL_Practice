@@ -1,0 +1,8 @@
+with t1 as (select count(*) as c1 from (
+	select distinct sender_id, send_to_id
+	from friend_request)x)),
+t2 as( select count(*) as c2 from (
+	select distinct requester_id, accepter_id
+	from request_accepted)y ))
+
+select round(c1/c2,2) as accept_rate from t1,t2 

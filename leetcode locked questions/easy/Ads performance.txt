@@ -1,0 +1,10 @@
+with cte as (select ad_id as id1,count(user_id) as total from Ads 
+where action not like 'I%'
+group by ad_id)
+
+select ad_id,round(require/total,2) as ctr from (
+(select ad_id,count(user_id) as require from (
+select * from Ads where action not like 'I%') x
+where action like 'C%
+group by ad_id) join cte on ad_id=id1) y
+order by ctr desc,ad_id;

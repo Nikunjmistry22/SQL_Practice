@@ -1,0 +1,2 @@
+select from_user,count(to_user)  , dense_rank() over(order by count(to_user) desc,from_user) as r from google_gmail_emails
+group by from_user

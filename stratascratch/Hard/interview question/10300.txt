@@ -1,0 +1,6 @@
+ select * from (
+ select  date,sum(case when paying_customer like 'no' then downloads else 0 end) as non_paying_downloads,sum(case when paying_customer like 'yes' then downloads else 0 end) as paying_downloads from ms_user_dimension u join ms_acc_dimension a 
+ on u.acc_id=a.acc_id 
+join ms_download_facts d on u.user_id=d.user_id
+group by date
+order by date) x where x.non_paying_downloads>paying_downloads
