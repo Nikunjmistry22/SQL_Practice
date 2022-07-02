@@ -1,0 +1,17 @@
+
+
+ with cte as (select first_player,sum(total1) as total from (
+select first_player,sum(first_score) as total1 from Matches
+group by first_player
+union
+select second_player,sum(second_score) as total2 from Matches
+group by second_player) x
+group by x.first_player)
+
+select group_id,player_id from (
+select *,dense_rank() over(partition by group_id order by 
+total desc,player_id) as r
+from Players p join cte c on p.player_id=c.first_name) z
+where x.r=1
+
+ 
