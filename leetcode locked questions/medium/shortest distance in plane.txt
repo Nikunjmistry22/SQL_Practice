@@ -1,0 +1,8 @@
+select round(a.shortest,2) as shortest
+from(
+select sqrt(pow((p1.x-p2.x),2)+pow((p1.y-p2.y),2)) as shortest
+from point_2d p1
+cross join point_2d p2
+where p1.x!=p2.x or p1.y!=p2.y
+order by sqrt(pow((p1.x-p2.x),2)+pow((p1.y-p2.y),2))
+limit 1) a

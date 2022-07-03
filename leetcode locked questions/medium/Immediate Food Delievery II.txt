@@ -1,0 +1,10 @@
+with cte as
+(select *,(case when order_date= customer_pref_delivery_date then
+'Scheduled' else 'Immediate' end) as type
+from ( 
+select *,dense_rank() over(partition by customer_id 
+order by order date)r  from Delivery )x
+where x.r=1)
+
+with total as (select count(*) as t from cte)
+select count(*)/t*100 from cte,total where type like 'Immediate' 
