@@ -1,0 +1,7 @@
+select Id,Month,c_salary from(
+select *,dense_rank() over(partition by Id order by c_salary desc)
+as r from (
+select *,sum(salary) over(partition by Id order by Month) 
+as c_salary from Employee) x)y
+where y.r=1
+
