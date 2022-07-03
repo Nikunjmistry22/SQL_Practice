@@ -1,0 +1,4 @@
+with cte(total) as (select count(*) from fb_requests)
+select sender_id,count(is_accepted)/total from fb_requests,cte
+where weekofyear(sent_date)=49
+group by sender_id

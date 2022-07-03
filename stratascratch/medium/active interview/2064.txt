@@ -1,0 +1,3 @@
+with cte as (select avg(abs(gun_time-net_time)) as male_average from marathon_male),
+cte1 as (select avg(abs(gun_time-net_time)) as female_average from marathon_female)
+select abs(male_average-female_average) from cte,cte1

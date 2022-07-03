@@ -1,0 +1,2 @@
+with 10th_runner(10th_net_time) as (select net_time from  (select *,dense_rank() over(order by net_time desc) as r from marathon_male)x where x.r=10)
+select abs(net_time-10th_net_time) from marathon_male,10th_runner where person_name like 'Chris Doe'
