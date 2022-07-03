@@ -1,0 +1,3 @@
+select count(*) from (select user_id,sum(case when type like 'Refinance' then 1 else 0 end )as refinance_sub,sum(case when type like 'InSchool' then 1 else 0 end )as inschool_sub from loans
+group by user_id)x
+where refinance_sub>1 and inschool_sub>1

@@ -1,0 +1,7 @@
+with cte as (SELECT a.train_id,arrival_time,departure_time FROM train_arrivals a join train_departures d on a.train_id=d.train_id)
+
+select platform from (
+select arrival_time,departure_time,count(train_id) as platform,dense_rank() over(order by count(train_id) desc) r from cte group by arrival_time)x
+where x.r=1
+
+
