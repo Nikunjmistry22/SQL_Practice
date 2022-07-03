@@ -1,0 +1,4 @@
+select extra,count(post_id) as report_count from Actions
+where action_date=datediff('2019-07-05',interval 1 day)
+and action like 'report'
+group by extra

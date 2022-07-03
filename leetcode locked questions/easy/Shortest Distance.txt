@@ -1,0 +1,1 @@
+select min(abs(p2.x-p1.x)) from point p1 join point p2
