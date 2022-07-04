@@ -1,0 +1,33 @@
+with cte as (SELECT voter,sum(case when candidate like 'R%' then 1 else 0 end) as Ryan,
+sum(case when candidate like 'C%' then 1 else 0 end) as Christine,
+sum(case when candidate like 'K%' then 1 else 0 end) as Kathy,
+sum(case when candidate like 'P%' then 1 else 0 end) as Paul,
+sum(case when candidate like 'A%' then 1 else 0 end) as Anthony ,
+sum(case when candidate like 'N%' then 1 else 0 end) as Nicole ,
+sum(case when candidate is null then 1 else 0 end)as none
+FROM voting_results
+group by voter),
+
+total_vote as (select voter,Ryan+ Christine+Kathy+Paul+Anthony+Nicole+none as total from cte),
+
+election_result as (select round(sum(Christine/total),3) as christine_total,round(sum(Kathy/total),3) as kathy_total,round(sum(Paul/total),3) as paul_total,
+round(sum(Anthony/total),3) as anthony_total,round(sum(Nicole/total),3) as nicole_total,round(sum(none/total),3)as none_total
+from cte join total_vote on cte.voter=total_vote.voter),
+
+pivot as (
+select 'christine' as candidates,christine_total as Total_vote from election_result
+union
+select 'Kathy',kathy_total from election_result
+union
+select 'Paul',paul_total from election_result
+union
+select 'Anthony',anthony_total from election_result
+union
+select 'Nicole',nicole_total from election_result)
+-- union
+-- select 'none',none_total from election_result)
+
+select candidates,Total_vote from (
+select *,dense_rank() over(order by Total_vote desc) as r from pivot )y
+where y.r=1
+

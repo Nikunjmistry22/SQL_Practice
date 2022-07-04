@@ -1,0 +1,5 @@
+select market_name,total_order from (
+select market_name,count(o.order_id) as total_order, dense_rank() over(order by count(o.order_id) desc) r from shopify_orders o join shopify_users u on o.user_id=u.id join map_product_order p on o.order_id=p.order_id join dim_product d on p.product_id=d.prod_sku_id
+where country like 'Germany'
+group by  prod_sku_id)x
+where x.r=1
