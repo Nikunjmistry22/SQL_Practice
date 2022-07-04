@@ -1,0 +1,8 @@
+with cte as (select trackname,position,min(date) as min_usa,max(date) as max_usa from spotify_daily_rankings_2017_us
+where position =1
+group by trackname),
+cte1 as  (select trackname,position,min(date) as min_world,max(date) as max_world from spotify_worldwide_daily_song_ranking
+where position =1
+group by trackname)
+select cte.trackname,datediff(max_usa,min_usa)+datediff(max_world,min_world) from cte join cte1 on cte.trackname=cte1.trackname
+order by trackname

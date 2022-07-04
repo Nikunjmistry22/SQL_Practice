@@ -1,0 +1,2 @@
+select f.feature_id,avg(step_reached/n_steps*100) from facebook_product_features f join facebook_product_features_realizations r on f.feature_id=r.feature_id
+group by f.feature_id

@@ -1,0 +1,3 @@
+select t1.number,t2.number,t3.number from transportation_numbers t1 join transportation_numbers t2 join transportation_numbers t3
+where t1.number+t2.number+t3.number=8 and (t1.number!=t2.number and t3.number!=t2.number and t1.number!=t3.number)  
+order by t1.number,t2.number,t3.number

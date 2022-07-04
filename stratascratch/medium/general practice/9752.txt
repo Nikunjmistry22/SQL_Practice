@@ -1,0 +1,8 @@
+with cte1 as (select nominee,count(winner) as winner from oscar_nominees
+where winner=1
+group by nominee),
+cte2 as (select nominee,count(winner) as not_winner from oscar_nominees where winner=0
+group by nominee)
+select nominee,winner/not_winner as ratio from (
+select cte1.nominee,winner,not_winner from cte1 join cte2 on cte1.nominee=cte2.nominee)x
+order by ratio desc
