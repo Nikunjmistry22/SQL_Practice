@@ -1,0 +1,4 @@
+select viewer_id,count(article_id)
+where author_id!=viewer_id
+group by viewer_id,view_date
+having count(article_id)>1
