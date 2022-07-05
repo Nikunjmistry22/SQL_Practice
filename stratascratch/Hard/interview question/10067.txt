@@ -1,0 +1,21 @@
+with min_step as (
+select session_id,step_id,lat1 ,lon1 from (select session_id,step_id,latitude as lat1 ,longitude as lon1,dense_rank() over(partition by session_id order by step_id) r 
+from google_fit_location)x 
+where x.r=1),
+
+max_step as (select session_id,step_id,lat2 ,lon2 from (select session_id,step_id,latitude as lat2 ,longitude as lon2,dense_rank() over(partition by session_id order by step_id desc) r 
+from google_fit_location)x 
+where x.r=1),
+
+average_flatsurface_distance as (select m1.session_id,avg(sqrt(power((lat2-lat1),2)+power(lon2-lon1,2))*111) as  avg_distance_flat_surface 
+from min_step m1 join max_step m2 on m1.session_id=m2.session_id ),
+
+flatsurface_distance as (select m1.session_id ,avg(sqrt(power((lat2-lat1),2)+power(lon2-lon1,2))*111) as  avg_distance_flat_surface 
+from min_step m1 join max_step m2 on m1.session_id=m2.session_id group by session_id),
+
+average_curvature as (
+select m1.session_id,avg(acos((sin(pi()/180*lat1)*sin(pi()/180*lat2))+(cos(pi()/180*lat1)*cos(pi()/180*lat2)))*6371) as  avg_curvature
+ from min_step m1 join max_step m2 on m1.session_id=m2.session_id group by session_id)
+
+select a.session_id,abs(avg_distance_flat_surface-avg_curvature) as diff from flatsurface_distance f,average_curvature a where f.session_id=a.session_id
+
