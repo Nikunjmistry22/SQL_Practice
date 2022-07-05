@@ -1,0 +1,6 @@
+select succesfully_received/sent_message from (
+select sum(case when receiver is not null then 1 else 0 end) 
+as succesfully_received
+,count(*) as sent_message from 
+facebook_messages_sent s left join facebook_messages_received r 
+on s.message_id=r.message_id)x

@@ -1,0 +1,6 @@
+with senior as (select sum(is_senior) as total_senior from facebook_employees
+where is_senior = 1),
+usa_employee as (select count(*) as total_usa_employee from facebook_employees where location like 'USA')
+select (case when total_senior>total_usa_employee then 'More Seniors' else
+'More USA-based' end) as result
+from senior,usa_employee

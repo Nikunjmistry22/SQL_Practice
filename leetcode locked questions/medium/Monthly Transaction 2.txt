@@ -1,0 +1,12 @@
+with cte as (select * from Transactions t join Chargebacks c
+on t.id=c.trans_id),
+
+approved_info as (select month(trans_date),country,
+sum(case when state like 'a%' then 1 else 0 end) as approved_count,
+sum(case when state 
+like 'a%' then amount end) as approved_amount from cte
+group by mount(trans_date),country )
+
+chargeback_info as (select month(charge_date),count(charge_date),
+sum(amount) as charge_amount from cte group by month(charge_date))
+
