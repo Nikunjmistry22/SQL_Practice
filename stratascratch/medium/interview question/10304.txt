@@ -1,0 +1,12 @@
+with project as (select title,budget,datediff(end_date,start_date) as total_days,id as p_id from linkedin_projects),
+
+employee_salary_project as (select *,total_days*salary/365 as salary_based_proj from 
+project p join linkedin_emp_projects ep on p.p_id=ep.project_id join linkedin_employees e on ep.emp_id=e.id),
+
+project_budget as (select title,sum(budget) as total_proj_budget from employee_salary_project group by title),
+
+comparison as (select title,sum(salary_based_proj) as total_emp_salary_proj from employee_salary_project group by title)
+
+select c.title,total_proj_budget,ceil(total_emp_salary_proj) as prorated_emp_expense from comparison c join project_budget p on c.title=p.title 
+where total_emp_salary_proj>total_proj_budget
+order by title

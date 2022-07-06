@@ -1,0 +1,23 @@
+select name as results
+from(
+(select a.name
+from(
+select name, count(*),
+rank() over(order by count(*) desc) as rk
+from movie_rating m
+join users u 
+on m.user_id = u.user_id
+group by name, m.user_id
+order by rk, name) a
+limit 1)
+union
+(select title
+from(
+select title, round(avg(rating),1) as rnd
+from movie_rating m
+join movies u
+on m.movie_id = u.movie_id
+where month(created_at) = 2
+group by title
+order by rnd desc, title) b
+limit 1)) as d
