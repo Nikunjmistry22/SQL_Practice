@@ -1,0 +1,3 @@
+   select distinct salary from worker e1 where 2 = 
+(select count(distinct salary) from worker e2 
+where  e1.salary <= e2.salary);

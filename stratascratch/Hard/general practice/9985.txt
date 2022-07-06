@@ -1,0 +1,9 @@
+with average_2013 as (select avg(totalpay) as average from sf_public_salaries where year=2013),
+
+more_than_avg as (select * from sf_public_salaries,average_2013
+where totalpay>average),
+
+not_top5 as (select id as id1 ,employeename as name,jobtitle,totalpay from (
+select *,dense_rank() over(partition by jobtitle order by totalpay) r from sf_public_salaries )x where x.r>5)
+
+select employeename from more_than_avg a join not_top5 t on a.id=t.id1

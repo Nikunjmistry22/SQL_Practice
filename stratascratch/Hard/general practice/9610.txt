@@ -1,0 +1,8 @@
+with total_count as (select count(*) as total from sat_scores),
+
+median_index as (select *,ceil(median_index) as ceil_index,floor(median_index) as floor_index from (select (total+1)/2 as median_index from total_count)x),
+
+median_value as (select * from sat_scores s join median_index m on s.id=m.ceil_index
+union select * from sat_scores s join median_index m on s.id=m.floor_index
+)
+select id,avg(sat_writing)as median_sat from median_value
