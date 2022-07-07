@@ -1,0 +1,24 @@
+with t1 as(
+select max(a.total) as total
+from(
+    select activity, count(*) as total
+    from friends
+    group by activity) a
+	union all
+	select min(b.total) as low
+    from(
+    select activity, count(*) as total
+    from friends
+    group by activity) b), 
+t2 as
+(
+    select activity, count(*) as total
+    from friends
+    group by activity
+)
+
+select activity
+from t1 right join t2
+on t1.total = t2.total
+where t1.total is null
+	
