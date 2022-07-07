@@ -1,0 +1,26 @@
+with split_word as (SELECT business_id,Substring_index(business_address, ' ', 1)  AS first_word, Substring_index(Substring_index(business_address, ' ', 2), ' ', -1) AS second_word,
+Substring_index(Substring_index(business_address, ' ', 3), ' ', -1) AS third_word,inspection_id FROM sf_restaurant_health_violations),
+
+len_word as (select business_id as b1,length(first_word) as l_w1,length(second_word) as l_w2,length(third_word) as l_w3 from split_word
+),
+
+combine as (select * from len_word l join split_word s on l.b1=s.business_id ) ,
+
+condition_check as (select *,(case when first_word LIKE '%0%'
+    OR first_word LIKE '%1%'
+    OR first_word LIKE '%2%'
+    OR first_word LIKE '%3%'
+    OR first_word LIKE '%4%'
+    OR first_word LIKE '%5%'
+    OR first_word LIKE '%6%'
+    OR first_word LIKE '%7%'
+    OR first_word LIKE '%8%'
+    OR first_word LIKE '%9%'
+then 1 else 0 end) as check_num
+from combine)
+
+select street_name,count(inspection_id) as total from (
+select (case when check_num = 1 then second_word 
+when (check_num=1 and l_w2 = 1) then third_word 
+else first_word end) as street_name,inspection_id from condition_check)x group by street_name
+order by total desc

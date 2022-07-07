@@ -1,0 +1,6 @@
+select business_name,length(business_name)+no_symbols from (
+SELECT business_name,sum(case when business_name like '%#%' or business_name like '%&%' then -1
+when business_name like '%&%' then -1
+else 0
+end) as no_symbols FROM sf_restaurant_health_violations
+group by business_name)x
