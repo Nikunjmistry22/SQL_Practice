@@ -1,0 +1,8 @@
+with median_index as (select department as d,(count(salary)+1)/2 as median_index from employee group by d),
+median_range as (select *,floor(median_index) as f,ceil(median_index)as c from median_index group by d),
+rank_per_department as (select *,dense_rank() over(partition by department order by id)as r from employee),
+result as (select * from median_range m join rank_per_department r1 on m.f=r1.r and m.d=r1.department
+union
+select * from median_range m join rank_per_department r1 on m.c=r1.r and m.d=r1.department)
+
+select d,avg(salary) as median_salary from result group by d

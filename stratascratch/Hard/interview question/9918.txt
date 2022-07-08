@@ -1,0 +1,10 @@
+WITH CTE AS (select 
+        CASE WHEN CITY = 'California' then first_name end as California,
+        CASE WHEN CITY = 'Arizona' then first_name end as Arizona,
+        CASE WHEN CITY = 'Hawaii' then first_name end as Hawaii,
+        DENSE_RANK() OVER(PARTITION BY CITY ORDER BY FIRST_NAME ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING) AS NAME_RANK
+    FROM employee
+    WHERE CITY IN ('California', 'Arizona', 'Hawaii'))
+
+    
+SELECT MAX(california) AS california,MAX(arizona) AS arizona,MAX(hawaii) AS hawaii FROM CTE group by NAME_RANK

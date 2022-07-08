@@ -1,0 +1,28 @@
+with words as (select Substring_index(words1, ',', 1) as words from google_word_lists union
+select Substring_index(Substring_index(words1, ',', 2), ',', -1) from google_word_lists
+union
+select Substring_index(Substring_index(words1, ',', 3), ',', -1) from google_word_lists
+union
+select Substring_index(Substring_index(words2, ',', 2), ',', -1) from google_word_lists
+union
+select Substring_index(Substring_index(words2, ',', 3), ',', -1) from google_word_lists
+union 
+select Substring_index(words2, ',', 1) from google_word_lists),
+a as (select *,count(*)as counts from words where words like '%a%' group by words),
+e as (select *,count(*) as e_count from words where words like '%e%' group by words),
+i as (select *,count(*) as i_count from words where words like '%i%' group by words),
+o as (select *,count(*) as o_count from words where words like '%o%' group by words),
+u as (select *,count(*) as u_count from words where words like '%u%' group by words),
+result as (select * from a
+union all
+select * from e
+union all
+select * from i
+union all
+select * from o
+union all
+select * from u)
+
+ select words from result group by words having sum(counts)=2
+-- select * from google_word_lists
+
