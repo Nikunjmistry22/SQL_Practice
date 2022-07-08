@@ -1,0 +1,8 @@
+with cte as (
+select client_id,sum(case when event_type like 'video call received' then 1 else 0 end) as v1,
+sum(case when event_type like 'voice call received' then 1 else 0 end)as v2,
+sum(case when event_type like 'video call sent' then 1 else 0 end)v3 ,
+sum(case when event_type like 'voice call sent' then 1 else 0 end)v4 from fact_events group by client_id
+ ),
+ total as (select client_id,count(*) as total from fact_events group by client_id)
+ select c.client_id,(v1+v2+v3+v4)/total*100 as percent from cte c join total t on c.client_id=t.client_id having percent>=50
