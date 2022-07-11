@@ -1,0 +1,2 @@
+select year,ifnull(average,172.73) as average1 from (
+select year,avg(height) as average from olympics_athletes_events group by year order by year)x

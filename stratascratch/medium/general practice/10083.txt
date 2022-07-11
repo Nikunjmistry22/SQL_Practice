@@ -1,0 +1,2 @@
+select datediff('2022-07-11',start_date)/360 as contract_in_year from (
+select *,dense_rank() over(order by yearly_salary desc)r from lyft_drivers where end_date is null)x where x.r<6

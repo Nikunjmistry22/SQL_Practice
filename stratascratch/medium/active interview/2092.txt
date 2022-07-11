@@ -1,0 +1,3 @@
+select * from (
+select date,name,dense_rank() over(partition by date order by n_items desc)r from (
+select o.id as order_id,customer_id,m.id,date(order_timestamp) as date,n_items,total_amount_earned,name,category,zipcode from doordash_orders o join doordash_merchants m on o.merchant_id=m.id)x)y where y.r<4

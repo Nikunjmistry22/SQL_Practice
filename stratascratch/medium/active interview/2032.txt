@@ -1,0 +1,2 @@
+select wd,billing_cycle ,count(*) from (
+SELECT *,weekday(signup_start_date) as wd FROM signups s join plans p on s.plan_id=p.id)x group by wd,billing_cycle
