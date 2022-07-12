@@ -1,0 +1,12 @@
+select * from (
+select variety,region,avg(average*total_units)as total_revenue from (
+select variety,region_1 as region,avg(price) as average,count(*)as total_units from winemag_p1 
+where region_1 is not null
+group by variety,region_1 
+union
+select variety,region_2,avg(price) as average,count(*)as total_units from winemag_p1 
+where region_2 is not null
+group by variety,region_2 )x
+group by variety,region 
+)y
+where y.total_revenue is not null

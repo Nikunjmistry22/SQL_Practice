@@ -1,0 +1,2 @@
+select title,points,price,ratio from (
+select title,points,price,points/price as ratio ,dense_rank() over(order by points/price desc)r from winemag_p2 where points is not null and price is not null)x where x.r=1

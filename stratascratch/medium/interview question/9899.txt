@@ -1,0 +1,2 @@
+select first_name,order_details,round(total_order_cost/total*100,2) as percentage from ( 
+select c.id,first_name,order_details,total_order_cost,sum(total_order_cost) over(partition by cust_id) as total from orders o join customers c on o.cust_id=c.id)x 

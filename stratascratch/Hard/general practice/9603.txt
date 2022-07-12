@@ -1,0 +1,7 @@
+select name1,abs(fare1-fare2) as absolute_differnce ,name2 from (
+select t1.name as name1,t1.age as age1,t1.fare as fare1,
+t2.name as name2,t2.age as age2,t2.fare as fare2 
+from titanic t1 join titanic t2 on t1.pclass=t2.pclass 
+where t1.age is not null and (abs(t1.age-t2.age)<=5 or 
+abs(t2.age-t1.age)<=5) and t1.survived =0 and t2.survived=0)x 
+where name1!=name2

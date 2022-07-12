@@ -1,0 +1,3 @@
+with survivor as (select pclass,sum(survived) as survivors from titanic where survived=1 group by pclass ),
+non_survivor as (select pclass as pclass1,count(survived) as non_survivor from titanic where survived=0 group by pclass)
+select pclass,survivors,non_survivor from survivor s join non_survivor n on s.pclass=n.pclass1
