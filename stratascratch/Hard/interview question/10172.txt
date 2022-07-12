@@ -1,0 +1,2 @@
+select substring(invoicedate,1,7) as date,description, whoru from (
+select invoicedate,description,quantity*unitprice as whoru,dense_rank() over(partition by month(invoicedate) order by quantity*unitprice desc) r from online_retail )x where x.r=1

@@ -1,0 +1,5 @@
+select date,round((revenue-last_month_revenue)/last_month_revenue*100,2)as percentage_change from (
+select *,LAG(revenue) OVER (ORDER BY date) as last_month_revenue from (
+select substring(created_at,1,7)as date,sum(value) as revenue from sf_transactions
+group by year(created_at),month(created_at))x)y 
+

@@ -1,0 +1,1 @@
+select pclass,sex,count(*) as total from titanic where survived=1 group by pclass,sex

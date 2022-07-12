@@ -1,0 +1,4 @@
+with total_players as (select count(distinct player_id) as total from players_logins)
+-- select count(distinct player_id)/total from(select *,lead(login_date) over(partition by player_id order by login_date) as next_login from players_logins)x,total_players where datediff(next_login,login_date)=1
+
+select count(distinct p1.player_id)/total from total_players,players_logins p1 join players_logins p2 on p1.player_id=p2.player_id and datediff(p2.login_date,p1.login_date)=1

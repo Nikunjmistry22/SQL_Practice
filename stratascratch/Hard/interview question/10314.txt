@@ -1,0 +1,5 @@
+select date,round((total_revenue+last_month_tr+last_to_last_month_tr)/3,2) as 3_month_rolling from (
+select *,lag(last_month_tr) over(order by date) as last_to_last_month_tr from (
+select *,lag(total_revenue) over(order by date) as last_month_tr from (
+select date,purchase_amt*count(*) as total_revenue from(
+SELECT user_id,substring(created_at,1,7)as date,purchase_amt FROM amazon_purchases where purchase_amt>0)x group by date)y)z)a
