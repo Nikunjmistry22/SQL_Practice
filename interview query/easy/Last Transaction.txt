@@ -1,0 +1,3 @@
+select created_at,transaction_value,id from (select *,
+dense_rank() over(partition by date(created_at) order by 
+time(created_at) desc) r from bank_transactions)x where x.r=1

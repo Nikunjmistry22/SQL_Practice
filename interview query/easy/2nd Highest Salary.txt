@@ -1,0 +1,7 @@
+select max(salary) from (
+select salary,count(*) as no_of_count from employees e join departments d on 
+e.department_id=d.id
+where d.id=1 
+group by salary
+having no_of_count=1
+order by no_of_count desc)x
