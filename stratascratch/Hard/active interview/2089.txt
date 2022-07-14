@@ -1,0 +1,11 @@
+with row_no as (select 0 as r union select row_number() over(order by page_number) r from cookbook_titles),
+
+sides as (select r*2 as left_side,r*2+1 as right_side from row_no ),
+
+result as (select left_side,(case when left_side=page_number then title else null end )left_title,right_side,
+(case when right_side=page_number then title else null end )right_title from sides join cookbook_titles ),
+
+cte as (select distinct left_side,left_title,right_side,right_title,
+DENSE_RANK() OVER(ORDER BY left_side ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING) AS NAME_RANK from result)
+
+SELECT left_side,MAX(left_title) AS left_title,MAX(right_title) AS right_title from cte group by NAME_RANK
