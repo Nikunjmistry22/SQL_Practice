@@ -1,0 +1,2 @@
+select user_id from (
+select *,adddate(block_date,block_duration) as till_date from fb_blocked_users)x  where block_date like '2021-12%' or till_date like '2021-12%'
