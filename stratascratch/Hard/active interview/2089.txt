@@ -1,4 +1,4 @@
-with row_no as (select 0 as r union select row_number() over(order by page_number) r from cookbook_titles),
+with row_no as (select 0 as r union select row_number() over(order by page_number)-1 r from cookbook_titles),
 
 sides as (select r*2 as left_side,r*2+1 as right_side from row_no ),
 
