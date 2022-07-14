@@ -1,0 +1,9 @@
+with cte as (select count(user_id) as single_post from (
+select user_id,job_id,count(*) as no_of_job from job_postings
+group by user_id,job_id
+having no_of_job =1)x),
+cte1 as (select count(user_id) as multiple_post from (
+select user_id,job_id,count(*) as no_of_job from job_postings
+group by user_id,job_id
+having no_of_job > 1)x)
+select * from cte,cte1
