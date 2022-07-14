@@ -1,0 +1,6 @@
+with load_time as (select user_id,timestamp,substring(timestamp,12,length(timestamp)) as page_load_time from (
+select *,dense_rank() over(partition by user_id order by timestamp desc)r from facebook_web_log where action like 'page_load')x where x.r=1),
+scroll_down  as (select user_id,timestamp,substring(timestamp,12,length(timestamp)) as page_scroll_down from (
+select *,dense_rank() over(partition by user_id order by timestamp )r from facebook_web_log where action like 'scroll_down')x where x.r=1)
+
+select l.user_id,page_load_time,page_scroll_down,abs(timediff(s.timestamp,l.timestamp)) as differnce from load_time l join scroll_down s on l.user_id=s.user_id
