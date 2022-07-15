@@ -1,0 +1,3 @@
+with average as (select industry,avg(profits) as a from forbes_global_2010_2014 group by industry),
+lowest_sale as (select industry,sales from (select industry,sales,dense_rank() over(partition by industry order by sales desc) r from forbes_global_2010_2014 )x where x.r=1)
+select l.industry,sales as lowest_sales,a as average_profit from lowest_sale l join average a on l.industry=a.industry

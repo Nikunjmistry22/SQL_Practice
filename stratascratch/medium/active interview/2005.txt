@@ -1,0 +1,2 @@
+with total as (select count(*)as t from fb_active_users)
+select count(*)/t*100 as condition_total from fb_active_users,total where country like 'USA' and status like 'open'

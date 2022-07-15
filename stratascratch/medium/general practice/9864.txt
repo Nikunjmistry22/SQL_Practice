@@ -1,0 +1,3 @@
+select worker_id,first_name,last_name,salary,joining_date,department from (
+select *,row_number() over(order by worker_id desc)r from worker)x where x.r<6
+order by worker_id

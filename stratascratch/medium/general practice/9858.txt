@@ -1,0 +1,3 @@
+select first_name,department from worker where department like 'HR'
+union all
+select first_name,department from worker where department like 'HR' order by first_name

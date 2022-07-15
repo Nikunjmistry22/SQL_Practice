@@ -1,0 +1,4 @@
+with cte(total) as (select count(*) from worker)
+select worker_id,first_name,last_name,salary,joining_date,department from (
+select *,row_number() over(order by worker_id) as r from worker,cte)x
+where x.r<=total/2

@@ -1,0 +1,6 @@
+with cte as (
+select college,sum(case when weight < 180 then 1 else 0 end) as under_weight,sum(case when weight >250 then 1 else 0 end) as over_weight from nfl_combine group by college),
+modified as (
+select * from cte where college is not null)
+
+select * from modified  where under_weight!=0 or over_weight!=0
