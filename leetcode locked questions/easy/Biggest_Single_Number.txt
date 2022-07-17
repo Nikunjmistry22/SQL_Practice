@@ -1,0 +1,4 @@
+select num from (
+select num,rank(order by num desc)r from (
+select num,count(num) as total from my_numbers group by num 
+having total=1)x)y where y.r=1

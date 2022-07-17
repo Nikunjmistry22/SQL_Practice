@@ -1,0 +1,11 @@
+with debit as (select paid_by ,-1*amount as debit_amount from Transactions),
+credit as (select paid_to as user_id,amount as credit_amount from Transactions),
+joined as (select * from debit
+union all
+select * from credit),
+cte as (select user_id,sum(amount)as amount from joined group by user_id)
+
+select *,(case when balance<0 then 'YES' else 'NO' end) as credit_limit from( 
+select u.user_id,user_name,credit+amount as balance from Users u 
+left join cte c on u.user_id=c.user_id)
+

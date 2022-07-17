@@ -1,0 +1,4 @@
+select Id,Month,cumm_salary from (
+select *,sum(Salary) over(partition by Id order by Month) as cumm_salary
+where Month<=3 
+order by Id,Month desc)x

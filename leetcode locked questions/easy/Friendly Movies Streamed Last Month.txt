@@ -1,0 +1,3 @@
+select distinct title from TVProgram t join Content c on t.content_id,content_id
+where kid_content like 'Y' and month(program_date)=6 and 
+year(program_date)=2020 

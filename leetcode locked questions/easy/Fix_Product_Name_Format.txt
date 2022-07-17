@@ -1,0 +1,4 @@
+select concat(substring(product_name,0),
+lower(substring(product_name,1,length(product_name)))) 
+as product_name,substring(sale_date,0,7)as sale_date,count(sale_id) from Sales
+group by month(sale_date) order by product_name,sale_date

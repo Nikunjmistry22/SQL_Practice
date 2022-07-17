@@ -1,0 +1,4 @@
+select machine_id,round(sum(case when activity_type like 'start' end
+then -timestamp else timestamp end)as time/count(distinct process_id),3) as process_time
+from Activity
+group by machine_id
