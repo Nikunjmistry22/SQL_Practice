@@ -1,0 +1,4 @@
+
+select product_name,brand_name,price,rating from innerwear_amazon_com where product_name not in (select product_name from innerwear_macys_com)
+union 
+select product_name,brand_name,price,rating from innerwear_amazon_com where product_name not in (select product_name from innerwear_topshop_com) group by product_name,	brand_name,mrp

@@ -1,0 +1,5 @@
+with total_count as (select count(distinct player_id) from Activity),
+match as (select count(*) as c from (select * from Activity a1 join Activity a2 on a1.player_id=a2.player_id
+and datediff(a2.event_date,a1.event_date)=1)x)
+
+select round(c/total,2)as fraction from match,total

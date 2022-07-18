@@ -1,0 +1,4 @@
+select date,ceil((num-previous_num)/previous_num*100) as rate_growth from (
+select *,lag(num) over(order by date) as previous_num from (
+select year(host_since) as date,count(id)as num from airbnb_search_details group by year(host_since) order by date)x)y
+order by rate_growth

@@ -1,0 +1,4 @@
+with cte as (select * from airbnb_host_searches group by price,
+property_type,room_type,amenities)
+select host_popularity_rate,min(price),avg(price),max(price)
+ from (select *,(case when number_of_reviews=0 then 'New' when number_of_reviews between 1 and 5 then'Rising' when number_of_reviews between 6 and 15 then 'Trending Up' when number_of_reviews between 16 and 40 then 'Popular' else 'Hot' end) as host_popularity_rate from cte)x group by host_popularity_rate
