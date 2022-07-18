@@ -1,0 +1,13 @@
+with champion as (select year,wimbledon as champion_id from Championships
+union all
+select year,Fr_open from Championships
+union all
+select year,US_open from Championships
+union all
+select year,Au_open from Championships),
+
+more_title as (select champion_id,count(*) as total_titles from champion 
+group by champion_id)
+
+select m.champion_id,player_name,total from Players p join more_title m 
+on p.player_id=m.champion_id

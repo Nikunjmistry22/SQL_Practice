@@ -1,0 +1,19 @@
+with cte as (select contest_id,gold_medal as medal from Contests
+union all
+select contest_id,silver_medal from Contests
+union all
+select contest_id,bronze_medal from Contests),
+
+case1 as (
+select distinct c1.medal as id from cte c1 left join cte c2 
+on c1.contest_id +1 = c2.contest_id left join cte c3 
+on c1.contest_id +2 = c3.contest_id where c1.medal=c2.medal 
+and c2.medal=c3.medal),
+
+case2 as (
+select gold_medal as id from contests group by gold_medal
+having count(contest_id)>=3)
+
+select u.name,u.mail from (select id from case1 
+ union 
+ select id from case2) as t inner join users u on u.user_id = t.id
