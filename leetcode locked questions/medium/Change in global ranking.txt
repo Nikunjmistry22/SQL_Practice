@@ -1,0 +1,37 @@
+Explanation
+
+team_id | points| rank
+3       |1431   |3
+1       |2132   |1
+2       |1402   |4
+4       |1817   |2
+
+
+team_id | pointchanged| rank
+3       | 1830        |2
+2       |1402         |4
+4       |1830         |3
+1       |2110         |1
+
+team_id | rank_diff
+3       |1
+1       |0
+2       |0
+4       |-1
+
+code
+with cte as (select t.team_id ,name,points,pointchanged from 
+TeamPoints t join PointsChange pon t.team_id=p.team_id),
+
+previous_rank as (select team_id,name,points,dense_rank() over(order by
+points desc)r1 from cte),
+
+update_rank as (select team_id,name,points+pointchanged 
+as update_point,dense_rank() over(order by update_point desc,
+name)r2 from cte),
+
+rank_diff as (select p.team_id,p.name,(case when r1>r2 then -1 
+when r1=r2 then 0 else 1 end) as rank_diff from 
+previous_rank p inner join update_rank u
+on p.team_id=u.team_id )
+

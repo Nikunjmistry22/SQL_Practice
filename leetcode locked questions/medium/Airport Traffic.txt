@@ -1,0 +1,8 @@
+with traffic as (select departure_airport as airport,flight_count
+union all
+select arrival_airport,flight_count)
+
+select airport from (
+select *,dense_rank(order by total_count desc)r from (
+select airport,sum(flight_count) as total_count 
+from traffic group by airport)x)y where y.r=1

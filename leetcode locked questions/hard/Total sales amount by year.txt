@@ -1,7 +1,17 @@
-select p.product_id,product_name,year(period_start)as report_year,
-datediff(period_end,period_start)*average_daily_sales as total_amount 
-from product p join Sales s on p.product_id=s.product_id
-union 
-select p.product_id,product_name,year(period_end),
-datediff(period_end,period_start)*average_daily_sales as total_amount 
-from product p join Sales s on p.product_id=s.product_id
+with 2018_year as (SELECT product_id, '2018' AS report_year,average_daily_sales * (DATEDIFF(LEAST(period_end, '2018-12-31'), 
+GREATEST(period_start, '2018-01-01'))+1) AS total_amount FROM Sales
+WHERE YEAR(period_start)=2018 OR YEAR(period_end)=2018),
+
+2019_year as (SELECT product_id, '2019' AS report_year,average_daily_sales * (DATEDIFF(LEAST(period_end, '2019-12-31'), 
+GREATEST(period_start, '2019-01-01'))+1) AS total_amount FROM Sales
+WHERE YEAR(period_start)=2019 OR YEAR(period_end)=2019),
+
+2020_year as (SELECT product_id, '2020' AS report_year,average_daily_sales * (DATEDIFF(LEAST(period_end, '2020-12-31'), 
+GREATEST(period_start, '2020-01-01'))+1) AS total_amount FROM Sales
+WHERE YEAR(period_start)=2020 OR YEAR(period_end)=2020)
+
+select product_id,'2018' as year,total_amount from 2018_year
+union all
+select product_id,'2019',total_amount from 2019_year
+union all
+select product_id,'2020',total_amount from 2020_year

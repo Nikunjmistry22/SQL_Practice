@@ -1,0 +1,7 @@
+with cte as (select c.id as c1_id,city ,total_order_cost from customers c join orders o on c.id=o.cust_id ),
+case_1 as (select city,count(*)as no_of_orders from cte group by city having no_of_orders>=5),
+
+case_2 as (select city,count(id) as no_of_cust from (select c.id,city,ifnull(total_order_cost,0)as total_cost_order from customers c left join orders o on c.id=o.cust_id )x group by city),
+
+case_3 as (select city,sum(total_order_cost) as total_cost from cte group by city)
+select case_1.city,no_of_orders,total_cost from case_1 join case_2 on case_1.city=case_2.city join case_3 on case_1.city=case_3.city

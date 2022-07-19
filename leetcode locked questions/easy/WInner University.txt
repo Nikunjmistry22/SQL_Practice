@@ -1,0 +1,8 @@
+with count_newyork as (select count(student_id) as n_ec from NewYork
+where score>=90),
+count_california as (select count(student_id) as c_ec from California where
+score>=90)
+
+select (case when n_ec>c_ec then 'New York University'
+when n_ec=c_ec then 'Draw'
+else 'California University') as winner  

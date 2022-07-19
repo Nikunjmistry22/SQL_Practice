@@ -1,0 +1,10 @@
+with phone_user as (select language,count(e.user_id) as 
+total_user from playbook_events e join playbook_users u 
+on e.user_id=u.user_id  group by language),
+language_count as (select language,
+sum(case when device in('macbook pro','iphone 5s','ipad air') 
+then 1 else 0 end)as total from playbook_events e join 
+playbook_users u on e.user_id=u.user_id group by language )
+select l.language,total as total_apple_user, total_user from 
+language_count l join phone_user p on l.language=p.language 
+order by total_user desc

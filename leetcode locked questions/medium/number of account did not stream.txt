@@ -1,0 +1,10 @@
+with temp1 as
+(
+select account_id
+from Subscriptions sb
+where start_date >= '2021-01-01' and end_date <= '2021-12-31'
+and account_id not in (select distinct(account_id)
+                              from streams
+                              where stream_date >= '2021-01-01' and stream_date <= '2021-12-31' ))
+select count(account_id) as accounts_count
+from temp1;
