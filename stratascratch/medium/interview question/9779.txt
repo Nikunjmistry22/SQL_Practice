@@ -1,0 +1,1 @@
+select day,count(*) as no_interaction from facebook_user_interactions group by day order by day,no_interaction desc
