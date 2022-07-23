@@ -1,0 +1,5 @@
+select seller_id from (
+select *,dense_rank() over(partition by seller_id 
+order by total_sales)r from (
+select seller_id,sum(price) as total_sales from Product p 
+join Sales s on p.product_id=s.product_id )x)y where y.r=1

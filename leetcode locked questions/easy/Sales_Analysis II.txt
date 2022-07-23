@@ -1,0 +1,2 @@
+select buyer_id from Product p on Sales s on p.product_id=s.product_id
+where p.product_id!= 3 and p.product_id=1

@@ -1,0 +1,18 @@
+with acceptance_rate as (select count(*)as a from RequestAccepted group by requester_id,
+accepter_id),
+with request_rate as (select count(*) as r from FriendRequest group by 
+sender_id,send_to_id)
+
+select round(a/r,2)as accept_rate from acceptance_rate,request_rate
+
+******Follow Up**************
+
+Q1
+with acceptance_rate as (select month(accept_date)m1,count(*)as a from RequestAccepted group by month(accept_date),
+requester_id,accepter_id),
+with request_rate as (select month(request_date),count(*) as r from FriendRequest group by 
+month(request_date) as m2,sender_id,send_to_id)
+
+select round(a/r,2) from acceptance_rate,request_rate where acceptance_rate.m1=request_rate.m2
+
+

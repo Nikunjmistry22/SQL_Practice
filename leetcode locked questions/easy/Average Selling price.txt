@@ -1,0 +1,25 @@
+create table Prices (
+product_id int primary key,
+start_date date primary key,
+end_date date primary key,
+price int )
+
+create table UnitsSold (
+product_id int,
+purchase_date date,
+units int)
+
+insert into Prices(1,'2019-02-17','2019-02-28',5);
+insert into Prices(1,'2019-03-01','2019-03-22',20);
+insert into Prices(2,'2019-02-01','2019-02-20',15);
+insert into Prices(2,'2019-03-21','2019-03-31',30);
+
+insert into UnitsSold(1,'2019-02-25',100);
+insert into UnitsSold(1,'2019-03-01',15);
+insert into UnitsSold(2,'2019-02-10',200);
+insert into UnitsSold(2,'2019-03-22',30);
+
+select product_id,round(total/total_units,2)as average_price from (
+select p.product_id,sum(price*units) as total,sum(units) as total_units from product_id p join UnitsSold u 
+on p.product_id=u.product_id
+where purchase_date between start_date and end_date group by p.product_id)x

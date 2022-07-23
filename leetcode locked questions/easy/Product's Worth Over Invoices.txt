@@ -1,0 +1,8 @@
+select name,ifnull(total_rest,0)as rest,
+ifnull(total_paid,0)as paid,
+ifnull(total_canceled,0)as canceled,
+ifnull(total_refunded,0)as refunded
+from(
+select name,sum(rest)as total_rest,sum(paid)as total_paid,
+sum(canceled)as total_canceled,sum(refunded)as total_refunded from Product p left join Invoice i 
+on p.product_id=i.product_id)x
