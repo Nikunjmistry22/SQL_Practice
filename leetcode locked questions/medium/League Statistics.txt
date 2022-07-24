@@ -1,0 +1,28 @@
+with cte1 as (select home_team_id as team_id,home_team_goals as goals from Matches
+union
+select away_team_id,away_team_goals from Matches),
+
+total_goals_for as (select team_id,sum(goals) as goal_for from cte1 group by team_id),
+
+cte2 as (select home_team_id as team_id,away_team_goals from Matches union 
+       select away_team_id,home_team_goals from Matches
+),
+
+total_goals_against as (select team_id,sum(away_team_goals)as goal_against from cte2 group by team_id),
+
+tm as (select home_team_id as t from Matches union all select away_team_id from Matches),
+
+total_match as (select t,count(t) as t_m from tm group by t),
+
+points as (select home_team_id as team_id,(case when home_team_goals > away_team_goals then 3 
+when home_team_goals = away_team_goals then 1 else 0 end) as points from Matches
+           union all
+select away_team_id,(case when home_team_goals > away_team_goals then 0 
+when home_team_goals = away_team_goals then 1 else 3 end) as points from Matches),
+summary_points as (select team_id,sum(points) as points from points group by team_id)
+
+
+
+select t.team_name,t1.t_m as matches_played,s.points,t2.goal_for,t3.goal_against,t2.goal_for-t3.goal_against as goal_diff from Teams t join total_match t1 on t.team_id=t1.t join total_goals_for t2 on t2.team_id=t1.t join total_goals_against t3 on t3.team_id=t2.team_id join summary_points s on s.team_id=t3.team_id
+order by s.points desc,goal_diff desc
+

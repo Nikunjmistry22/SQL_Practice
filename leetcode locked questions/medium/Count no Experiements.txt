@@ -1,0 +1,17 @@
+select p.platform, n.experiment_name, count(e.platform) as num_experiments from (
+    select 'Android' as platform
+    union all
+    select 'IOS' as platform
+    union all
+    select 'Web' as platform
+) as p
+cross join (
+    select 'Reading' as experiment_name
+    union all
+    select 'Sports' as experiment_name
+    union all
+    select 'Programming' as experiment_name
+) as n
+left join Experiments e
+using (platform, experiment_name)
+group by p.platform, n.experiment_name;

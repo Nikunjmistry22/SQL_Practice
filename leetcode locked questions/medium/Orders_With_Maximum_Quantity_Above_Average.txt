@@ -1,0 +1,11 @@
+with cte1 as (select *,sum(quantity)as total_q,count(product_id)as total_p
+from OrdersDetails group by order_id),
+cte2 as(select order_id,total_q/total_p as avg_quantity from cte1),
+
+max_quantity as (select order_id,quantity as max_q from (select *,rank() 
+over(partition by order_id order by quantity desc) as r 
+from OrdersDetails)x where x.r=1)
+
+select c.order_id from cte2 c join max_quantity m on c.order_id=m.order_id
+where c.avg_quantity <m.max_q
+

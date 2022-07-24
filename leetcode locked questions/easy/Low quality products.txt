@@ -1,0 +1,3 @@
+select problem_id from (
+select problem_id,likes/(likes+dislikes)as quality from Problems)
+where quality<60

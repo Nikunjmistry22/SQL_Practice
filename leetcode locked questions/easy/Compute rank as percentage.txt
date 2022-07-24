@@ -1,0 +1,36 @@
+Students table:
++------------+---------------+------+
+| student_id | department_id | mark |
++------------+---------------+------+
+| 2          | 2             | 650  |
+| 8          | 2             | 650  |
+| 7          | 1             | 920  |
+| 1          | 1             | 610  |
+| 3          | 1             | 610  |
+| 9          | 1             | 480  |
++------------+---------------+------+
+
+Explaination
+
+Students table:
++------------+---------------+------+------+
+| student_id | department_id | mark | Rank |
++------------+---------------+------+------+
+| 7          | 1             | 920  |  1   |
+| 2          | 2             | 650  |  2   |
+| 8          | 2             | 650  |  2   |
+| 1          | 1             | 610  |  3   |
+| 3          | 1             | 610  |  3   |
+| 9          | 1             | 480  |  4   |
++------------+---------------+------+------+
+
+SELECT
+    student_id,
+    department_id,
+    IFNULL(ROUND(
+        ((RANK() OVER(PARTITION BY department_id ORDER BY mark DESC) - 1) * 100)
+        /
+        (COUNT(student_id) OVER(PARTITION BY department_id) - 1),
+        2
+    ), 0) AS percentage
+FROM Students;
