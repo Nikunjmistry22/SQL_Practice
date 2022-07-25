@@ -1,0 +1,7 @@
+with cte as (select *,dense_rank() 
+over(partition by gender order by user_id) as r1,case when gender
+like 'Female' then 1 when gender like 'Male' then 2 else 3) as r2
+from Genders )
+
+select user_id,gender from cte
+order by r1,r2
