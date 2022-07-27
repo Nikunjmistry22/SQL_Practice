@@ -1,0 +1,7 @@
+select username, activity, startDate, endDate
+from (
+select *,
+count(activity) over(partition by username) as cnt,
+ROW_NUMBER() over(partition by username 
+order by startdate desc) as n from UserActivity) as tbl
+where n=2 or cnt<2

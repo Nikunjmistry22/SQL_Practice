@@ -1,0 +1,5 @@
+with cte as (select book_id as id,sum(quantity) as total from Orders group by book_id)
+
+select book_id,name from (
+select b.book_id,name,coalesce(total,0) from Books b 
+left join cte c on b.book_id=c.id )x where x.total<10
