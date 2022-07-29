@@ -1,0 +1,2 @@
+with cte as (select project_id,p.employee_id,name,experience_years from Project p inner join Employee e on p.employee_id=e.employee_id)
+practice-# select project_id,employee_id from (select *,dense_rank() over(partition by project_id order by experience_years desc) r from cte)x where x.r=1;
