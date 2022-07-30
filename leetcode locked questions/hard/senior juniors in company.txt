@@ -1,0 +1,13 @@
+with cte as (
+select employee_id,experience,sum(salary) over(partition by experience order by 
+salary asc,employee_id asc) as cumm_salary from Candidates)
+
+select 'Senior' as experience,
+count(*) as accepted_candidate from cte where
+experience ='Senior' and cum_salary<=70000
+union 
+select 'Junior' as experience,
+count(*) as accepted_candidate from cte where
+experience ='Junior' and cum_salary<=(
+select 70000,ifnull(max(cumm_salary),0) from cte where experience='Senior'
+and cumm_salary <=7000);

@@ -1,0 +1,6 @@
+select id,ifnull(next_student,student)as student from ( 
+select *,lead(student) over(order by id) as next_student from Seat )x where x.id%2!=0
+union 
+select id,ifnull(next_student,student) from ( 
+select *,lag(student) over(order by id) as next_student from Seat)x where id%2=0
+order by id

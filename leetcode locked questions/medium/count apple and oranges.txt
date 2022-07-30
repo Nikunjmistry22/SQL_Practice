@@ -1,0 +1,18 @@
+select
+sum(t.apple) as apple_count,
+sum(t.orange) as orange_count
+
+from 
+		(select
+		sum(b.apple_count+c.apple_count) as apple,
+		sum(b.orange_count + c.orange_count) as orange
+		from boxes b 
+		inner join chests c on c.chest_id =b.chest_id
+		
+		union all
+		
+		select
+		apple_count as apple,
+		orange_count as orange
+		from boxes
+		where chest_id is null) as t
