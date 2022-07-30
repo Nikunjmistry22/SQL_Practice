@@ -1,0 +1,7 @@
+with cte as (select account_id,dat,(case when type like 'D' 
+then amount else -amount end) as amount from Transactions)
+
+select account_id,dat,(case when balance<0 then 0 else balance end) 
+as balance from (
+select account_id,dat,sum(amount) 
+over(partition by account_id order by dat) as balance from cte)x;

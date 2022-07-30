@@ -1,0 +1,6 @@
+with cte as (
+select distinct sub_id from Submissions where parent_id is NULL)
+
+select c.sub_id,count(*) from cte c left join Submissions s on c.parent_id=s.sub_id
+where s.parent_id is not null
+group by c.sub_id
