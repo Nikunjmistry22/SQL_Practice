@@ -1,0 +1,7 @@
+with first_time as (select user_id,activity_date from (select *,dense_rank() over(partition by user_id
+ order by activity_date)r from Traffic)x where x.r=1),
+
+cte as (select user_id,activity_date from first_time 
+where '2019-06-30'-activity_date between 0 and 90)
+
+select activity_date,count(distinct user_id) from cte group by activity_date;

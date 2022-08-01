@@ -1,0 +1,13 @@
+with tb1 as
+(select distinct post_id,action_date
+from actions
+where extra="spam"),
+
+tb2 as 
+(select 
+avg(r.remove_date is not null) as p
+from tb1 left join removals r on r.post_id=tb1.post_id
+group by tb1.action_date)
+
+select round(avg(p) * 100,2) as average_daily_percent
+from tb2
