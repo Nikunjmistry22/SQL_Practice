@@ -1,0 +1,4 @@
+with cte as (select distinct salary,rank() over(order by salary) r 
+from Employees group by salary having count(employee_id)>1)
+select *,r from Employees,cte where salary in (select salary from cte) 
+and Employees.salary=cte.salary 

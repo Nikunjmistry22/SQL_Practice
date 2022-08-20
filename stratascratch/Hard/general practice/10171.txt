@@ -1,0 +1,3 @@
+with cte as (select o.nominee,winner from oscar_nominees o join nominee_information n on o.nominee=n.name where winner>0)
+
+select nominee,sum(winner) as total from cte group by nominee order by total desc,nominee
