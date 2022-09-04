@@ -1,0 +1,5 @@
+with valid_promotion as (select * from facebook_sales where promotion_id in(select promotion_id from facebook_sales_promotions)),
+units_sold_each as (select product_id,count(*)as u_t from valid_promotion group by product_id),
+total_units_sold as (select count(*) as t from valid_promotion) ,
+cte as (select product_class,sum(u_t)/t*100 as unit_perct from total_units_sold,facebook_products p join units_sold_each u on p.product_id=u.product_id group by product_class)
+select * from cte order by unit_perct

@@ -1,0 +1,7 @@
+with recieve as (
+select day,count(distinct to_user) as c1 from google_gmail_emails group by day),
+send as (select day,count(distinct from_user)as c2 from google_gmail_emails group by day),
+result as (
+select r.day,c1,c2 from recieve r,send s where r.day=s.day and c1>c2 )
+
+select * from google_gmail_emails where day in (select day from result) order by id
