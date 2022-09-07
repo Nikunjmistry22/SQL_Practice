@@ -1,0 +1,4 @@
+select facility_name,score from (
+select *,rank() over(partition by facility_name order by score)r 
+from los_angeles_restaurant_health_inspections)x where x.r=1 
+order by score desc,facility_name

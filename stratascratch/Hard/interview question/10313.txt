@@ -1,0 +1,5 @@
+with cte as (select month(request_date) as m,sum(distance_to_travel)/sum(monetary_cost) as distance_per_dollar from uber_request_logs
+group by month(request_date)),
+model as (
+select m,distance_per_dollar as d1,lag(distance_per_dollar) over(order by m) as d2 from cte )
+select round(power(sum((d1-d2)*(d1-d2))/count(*),0.5),2)  as rmse from model
