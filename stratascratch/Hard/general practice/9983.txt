@@ -1,0 +1,7 @@
+with cte as (
+select *,row_number() over(partition by jobtitle order by id) as r from sf_public_salaries order by row_number() over(order by id)),
+total as (select jobtitle,count(*) as t from cte group by jobtitle),
+result as (select  cte.jobtitle,totalpay, r,t from cte join total on cte.jobtitle=total.jobtitle order by jobtitle,r)
+
+
+select jobtitle,totalpay as median_totalpay from result where r between t/2 and (t/2)+1 group by jobtitle order by totalpay desc
